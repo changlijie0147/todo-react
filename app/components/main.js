@@ -7,23 +7,25 @@ import './main.scss';
 export default class Todos extends Component {
   constructor(props) {
     super(props);
-
+    var todos = localStorage.getItem('todos');
+    console.log(JSON.parse(todos));
     this.state = {
-      todos: [
-        {
-          id: 1,
-          name: '吃饭',
-          isDone: false
-        }, {
-          id: 2,
-          name: '睡觉',
-          isDone: false
-        }, {
-          id: 3,
-          name: '打豆豆',
-          isDone: false
-        }
-      ],
+      // todos: [
+      //   {
+      //     id: 1,
+      //     name: '吃饭',
+      //     isDone: false
+      //   }, {
+      //     id: 2,
+      //     name: '睡觉',
+      //     isDone: false
+      //   }, {
+      //     id: 3,
+      //     name: '打豆豆',
+      //     isDone: false
+      //   }
+      // ],
+      todos:todos?JSON.parse(todos):[],
       view: 'SHOW_ALL'
     }
     this.addTodos = this.addTodos.bind(this);
@@ -34,6 +36,7 @@ export default class Todos extends Component {
   addTodos(item) {
     var that = this;
     that.state.todos.push(item)
+    localStorage.setItem("todos",JSON.stringify(that.state.todos));
     this.setState({
         todos:that.state.todos
     })
@@ -42,6 +45,7 @@ export default class Todos extends Component {
   modifyTodo(todo,index,name) {
     console.log(todo,index)
     this.state.todos[index-1][name] = todo;
+    localStorage.setItem("todos",JSON.stringify(this.state.todos));
     this.setState({
       todos:this.state.todos
     })
