@@ -8,7 +8,6 @@ export default class Todos extends Component {
   constructor(props) {
     super(props);
     var todos = localStorage.getItem('todos');
-    console.log(JSON.parse(todos));
     this.state = {
       todos:todos?JSON.parse(todos):[],
       view: 'SHOW_ALL'
@@ -17,6 +16,7 @@ export default class Todos extends Component {
     this.modifyTodo = this.modifyTodo.bind(this);   
     this.changeView = this.changeView.bind(this); 
     this.handleDel = this.handleDel.bind(this);
+    this.clearCompleted = this.clearCompleted.bind(this);
   }
   //添加一个
   addTodos(item) {
@@ -29,7 +29,6 @@ export default class Todos extends Component {
   }
   //修改一个
   modifyTodo(val,index,name) {
-    console.log(val,index)
     var todo = this.state.todos.find((item)=>item.id == index);
     todo[name] = val;
     localStorage.setItem("todos",JSON.stringify(this.state.todos));
@@ -57,6 +56,13 @@ export default class Todos extends Component {
     })
   }
 
+  clearCompleted(todos) {
+    localStorage.setItem("todos",JSON.stringify(todos));
+    this.setState({
+      todos:todos
+    })
+  }
+
   render() {
     var that = this;
     return (
@@ -64,7 +70,7 @@ export default class Todos extends Component {
         <h1 className="title">todos</h1>
         <Header addTodos={that.addTodos} todos={that.state.todos}></Header>
         <TodoList handleDel={this.handleDel} view={that.state.view} modifyTodo={that.modifyTodo} todos={that.state.todos}></TodoList>
-        <Footer todos={that.state.todos} changeView={that.changeView}></Footer>
+        <Footer todos={that.state.todos} clearCompleted={that.clearCompleted} changeView={that.changeView}></Footer>
       </div>
     );
   }

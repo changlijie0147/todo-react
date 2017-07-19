@@ -9,6 +9,12 @@ export default class TodoList extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      todos:nextProps.todos
+    })
+  }
+
   render() {
     var that = this;
     let todos=[];
