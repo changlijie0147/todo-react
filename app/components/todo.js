@@ -4,13 +4,17 @@ export default class Todo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isModify:false
+      isModify:false,
+      isHover:false
     }
 
     this.changeStatus = this.changeStatus.bind(this);
     this.beforeModify = this.beforeModify.bind(this);
     this.afterModify = this.afterModify.bind(this);
     this.onBlur = this.onBlur.bind(this);    
+    this.handleLeave = this.handleLeave.bind(this);
+    this.handleEnter = this.handleEnter.bind(this);
+    this.handleDel = this.handleDel.bind(this);
   }
 
   changeStatus() {
@@ -36,8 +40,24 @@ export default class Todo extends Component {
 
   onBlur() {
     this.setState({
-        isModify:!this.state.isModify
+      isModify:!this.state.isModify
     })
+  }
+
+  handleEnter() {
+    this.setState({
+      isHover:true
+    })
+  }
+
+  handleLeave() {
+    this.setState({
+      isHover:false
+    })
+  }
+
+  handleDel() {
+    this.props.handleDel(this.props.todo);
   }
 
   render() {
@@ -47,7 +67,12 @@ export default class Todo extends Component {
           <input type="checkbox" checked={this.props.todo.isDone?true:false} onChange={this.changeStatus}/>
         </div>
         <div className="item-form">
-          <p className={this.props.todo.isDone?'complete':''} onDoubleClick={this.beforeModify}>{this.props.todo.name}</p>
+          <p className={this.props.todo.isDone?'complete':''} onMouseLeave={this.handleLeave} onMouseEnter={this.handleEnter} onDoubleClick={this.beforeModify}>
+            {this.props.todo.name} 
+            {
+              this.state.isHover?<span className="delect" onClick={this.handleDel}>×</span>:null
+            }
+          </p>
           {
             this.state.isModify?<input className="input" type="text" onKeyUp={this.afterModify} onBlur={this.onBlur} autoFocus defaultValue={this.props.todo.name}/>:null
           }

@@ -29,13 +29,12 @@ export default class TodoList extends Component {
         todos.push(item);
       }, this);
     }
-    console.log(todos);
     
     return (
       <ul className="todo-list">
         {
           todos.map((item,i)=>{
-            return <Todo modifyTodo={that.props.modifyTodo} todo={item} key={i}></Todo>
+            return <Todo handleDel={this.props.handleDel} modifyTodo={that.props.modifyTodo} todo={item} key={i}></Todo>
           })
         }
       </ul>

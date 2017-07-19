@@ -50,6 +50,16 @@ ul {
       margin-left: 44px;
       p {
         margin: 0;
+        position: relative;
+        .delect {
+          cursor: pointer;
+          position: absolute;
+          right: 26px;
+          margin: auto 0;
+          font-size: 26px;
+          color: #cc9a9a;
+          transition: color 0.2s ease-out;
+        }
       }
       .complete {
         color: #d9d9d9;

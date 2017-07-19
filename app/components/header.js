@@ -3,14 +3,14 @@ import React, {Component} from 'react';
 export default class Header extends Component {
   constructor(props) {
     super(props);
+    this.handlerKeyUp = this.handlerKeyUp.bind(this);
   }
 
   handlerKeyUp(e) {
     var that = this;
     if (e.keyCode == 13 && e.target.value != '') {
-      console.log(e.target.value)
       let item = {
-        id: that.props.todos.length+1,
+        id: that.props.todos[that.props.todos.length-1].id + 1,
         name: e.target.value,
         isDone: false
       }
@@ -26,7 +26,7 @@ export default class Header extends Component {
         <input
           type="text"
           placeholder="What nedds to be done?"
-          onKeyUp={that.handlerKeyUp.bind(this)}/>
+          onKeyUp={that.handlerKeyUp}/>
       </header>
     )
   }
